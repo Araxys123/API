@@ -1,0 +1,17 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+
+# MongoDB data files
+data/
+
+# IDE files
+.vscode/
+.idea/
