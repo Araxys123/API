@@ -1,45 +1,63 @@
-# Simple API with Node.js and Express
+# Hướng dẫn chạy dự án API với Node.js và MongoDB
 
-## Cài đặt
+## 1. Cài đặt Node.js
+- Tải và cài đặt Node.js từ trang chính thức: [Node.js Download](https://nodejs.org/).
+- Chọn phiên bản LTS (Long Term Support) để đảm bảo tính ổn định.
 
-1. Clone repository hoặc tải xuống mã nguồn.
-2. Chuyển vào thư mục dự án:
-   ```bash
-   cd simple-api
-   ```
-3. Cài đặt các phụ thuộc:
-   ```bash
-   npm install
-   ```
+## 2. Cài đặt MongoDB
+- Tải và cài đặt MongoDB từ trang chính thức: [MongoDB Download Center](https://www.mongodb.com/try/download/community).
+- Giải nén file zip vào thư mục, ví dụ: `C:\mongodb`.
+- Mở Command Prompt và chuyển đến thư mục `bin`:
+  ```bash
+  cd C:\mongodb\bin
+  ```
+- Tạo thư mục lưu trữ dữ liệu:
+  ```bash
+  mkdir C:\data\db
+  ```
+- Khởi động MongoDB:
+  ```bash
+  mongod
+  ```
 
-## Chạy API
+### 3. Sử dụng MongoDB Compass
+- **Tải và cài đặt MongoDB Compass**: Bạn có thể tải MongoDB Compass từ trang chính thức: [MongoDB Compass Download](https://www.mongodb.com/try/download/compass).
+- **Kết nối đến MongoDB**:
+  - Mở MongoDB Compass.
+  - Nhập URI kết nối: `mongodb://127.0.0.1:27017/mydatabase` (hoặc `mongodb://localhost:27017/mydatabase`).
+  - Nhấn "Connect".
+- **Kiểm tra dữ liệu**:
+  - Sau khi kết nối, bạn sẽ thấy danh sách các collection trong cơ sở dữ liệu. Bạn có thể nhấp vào collection để xem các tài liệu bên trong.
 
-1. **Cài đặt MongoDB**:
-   - Tải và cài đặt MongoDB từ trang chính thức: [MongoDB Download Center](https://www.mongodb.com/try/download/community).
-   - Giải nén file zip vào thư mục, ví dụ: `C:\mongodb`.
-   - Mở Command Prompt và chuyển đến thư mục `bin`:
-     ```bash
-     cd C:\mongodb\bin
-     ```
-   - Tạo thư mục lưu trữ dữ liệu:
-     ```bash
-     mkdir C:\data\db
-     ```
-   - Khởi động MongoDB:
-     ```bash
-     mongod
-     ```
+## 4. Clone hoặc tải xuống mã nguồn
+- Sử dụng Git để clone dự án:
+  ```bash
+  git clone <repository-url>
+  ```
+- Hoặc tải xuống mã nguồn và giải nén vào thư mục mong muốn.
 
-2. **Chạy server**:
-   - Sử dụng Nodemon để chạy server:
-     ```bash
-     npm run dev
-     ```
+## 5. Chuyển vào thư mục dự án
+- Mở terminal và điều hướng đến thư mục chứa dự án:
+  ```bash
+  cd path\to\your\project\simple-api
+  ```
 
-3. **Kiểm tra API**:
-   - Sử dụng Postman hoặc cURL để gửi yêu cầu đến các endpoint của API.
+## 6. Cài đặt các phụ thuộc
+- Chạy lệnh sau để cài đặt các thư viện cần thiết:
+  ```bash
+  npm install
+  ```
 
-## Endpoint
+## 7. Chạy server
+- Sử dụng Nodemon để chạy server:
+  ```bash
+  npm run dev
+  ```
+
+## 8. Kiểm tra API
+- Sử dụng Postman hoặc cURL để gửi yêu cầu đến các endpoint của API.
+
+## 9. Endpoint
 
 ### Quản lý Người dùng
 - **Đăng ký người dùng**:
