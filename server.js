@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const { body, validationResult } = require('express-validator');
 const User = require('./models/User');
 const Product = require('./models/Product');
 const auth = require('./middleware/auth');
@@ -21,13 +23,20 @@ mongoose.connect('mongodb://127.0.0.1:27017/mydatabase', {
 // Biến toàn cục để theo dõi ID cuối cùng
 let lastProductId = 0;
 
-// Đăng ký người dùng
-app.post('/api/register', async (req, res) => {
-    const { name, email, password, role } = req.body; // Thêm role vào đây
+app.post('/api/register', [
+    body('name').notEmpty().withMessage('Name is required'),
+    body('email').isEmail().withMessage('Email is invalid'),
+    body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    const { name, email, password, role } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, password: hashedPassword, role: role || 'user' }); // Gán vai trò mặc định là 'user'
+    const user = new User({ name, email, password: hashedPassword, role: role || 'user' });
     await user.save();
-    res.status(201).json({ id: user._id, name: user.name, email: user.email, role: user.role }); // Trả về thông tin người dùng bao gồm vai trò
+    res.status(201).json({ id: user._id, name: user.name, email: user.email, role: user.role });
 });
 
 // Đăng nhập người dùng
@@ -37,7 +46,7 @@ app.post('/api/login', async (req, res) => {
     if (!user || !(await bcrypt.compare(password, user.password))) {
         return res.status(401).send('Invalid credentials');
     }
-    const token = jwt.sign({ id: user._id, role: user.role }, 'secretkey');
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET);
     res.json({ token });
 });
 
@@ -104,7 +113,7 @@ app.delete('/api/products/:id', auth, async (req, res) => {
 // Middleware xử lý lỗi
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).send('Something broke!');
+    res.status(err.status || 500).send({ error: err.message || 'Internal Server Error' });
 });
 
 // Khởi động server
